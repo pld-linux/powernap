@@ -1,13 +1,14 @@
 Summary:	Powernap
 Name:		powernap
 Version:	2.20
-Release:	0.1
+Release:	0.2
 License:	GPL
 Group:		Applications/System
 Source0:	https://launchpad.net/powernap/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
 # Source0-md5:	3aa5bd8f6d5f69045a0f28ad7acca732
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
+Requires:	python-%{name} = %{version}-%{release}
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -22,9 +23,18 @@ some number of $ABSENCE seconds. For instance, PowerNap can
 automatically "pm-suspend" a system if no instance of "kvm" runs for
 some contiguous block of "300" seconds.
 
+%package -n python-%{name}
+Summary:	Python library for powernap
+Group:		Libraries/Python
+Requires:	python-modules
+
+%description -n python-%{name}
+Python library for powernap
+
 %package -n powerwake
 Summary:	powerwake
 Group:		Applications/System
+Requires:	python-%{name} = %{version}-%{release}
 
 %description -n powerwake
 PowerWake is a generic mechanism for remotely waking systems. It is
@@ -87,6 +97,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/powernap.8*
 %{_mandir}/man8/powernapd.8*
 %{_mandir}/man8/powerwake-now.8*
+
+%files -n python-%{name}
+%defattr(644,root,root,755)
 %dir %{py_sitescriptdir}/%{name}
 %{py_sitescriptdir}/%{name}/*.py[co]
 %dir %{py_sitescriptdir}/%{name}/monitors
