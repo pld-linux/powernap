@@ -22,19 +22,9 @@ some number of $ABSENCE seconds. For instance, PowerNap can
 automatically "pm-suspend" a system if no instance of "kvm" runs for
 some contiguous block of "300" seconds.
 
-%package -n powernap-common
-Summary:	powernap-common
-Group:		Applications/System
-Requires:	powernap-common_%{version}=upstart >= 0.6.5
-
-%description -n powernap-common
-This package contains the common library files required as a runtime
-dependency of powernap.
-
 %package -n powerwake
 Summary:	powerwake
 Group:		Applications/System
-Requires:	powerwake_%{version}=upstart >= 0.6.5
 
 %description -n powerwake
 PowerWake is a generic mechanism for remotely waking systems. It is
@@ -75,6 +65,14 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/action
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/config
+/etc/pm/power.d/00flag
+/etc/pm/power.d/01cpu_online
+/etc/pm/power.d/cpu_frequency
+/etc/pm/power.d/eth_speed
+/etc/pm/power.d/kms_powermode
+/etc/pm/power.d/usb
+/etc/pm/power.d/usb_autosuspend
+/etc/pm/power.d/video
 %attr(755,root,root) %{_sbindir}/powernap
 %attr(755,root,root) %{_sbindir}/powernap-action
 %attr(755,root,root) %{_sbindir}/powernap-now
@@ -89,17 +87,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/powernap.8*
 %{_mandir}/man8/powernapd.8*
 %{_mandir}/man8/powerwake-now.8*
-
-%files -n powernap-common
-%defattr(644,root,root,755)
-/etc/pm/power.d/00flag
-/etc/pm/power.d/01cpu_online
-/etc/pm/power.d/cpu_frequency
-/etc/pm/power.d/eth_speed
-/etc/pm/power.d/kms_powermode
-/etc/pm/power.d/usb
-/etc/pm/power.d/usb_autosuspend
-/etc/pm/power.d/video
 %dir %{py_sitescriptdir}/%{name}
 %{py_sitescriptdir}/%{name}/*.py[co]
 %dir %{py_sitescriptdir}/%{name}/monitors
