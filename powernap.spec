@@ -1,7 +1,7 @@
 Summary:	Powernap
 Name:		powernap
 Version:	2.20
-Release:	0.2
+Release:	0.3
 License:	GPL
 Group:		Applications/System
 Source0:	https://launchpad.net/powernap/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
@@ -59,6 +59,7 @@ install -p bin/* $RPM_BUILD_ROOT%{_bindir}
 cp -a powernap-ethtool $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -p powerwake_completion $RPM_BUILD_ROOT/etc/bash_completion.d
 cp -p action config $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
+cp -p powerwaked.conf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 cp -a actions/pm/* $RPM_BUILD_ROOT/etc/pm/power.d
 cp -a powernap $RPM_BUILD_ROOT%{py_sitescriptdir}
 cp -a man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
@@ -88,16 +89,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/powernap-action
 %attr(755,root,root) %{_sbindir}/powernap-now
 %attr(755,root,root) %{_sbindir}/powernapd
-%attr(755,root,root) %{_sbindir}/powerwake-monitor
-%attr(755,root,root) %{_sbindir}/powerwake-now
-%attr(755,root,root) %{_sbindir}/powerwaked
 %attr(755,root,root) %{_bindir}/powernap_calculator
 %{_mandir}/man1/powernap_calculator.1*
 %{_mandir}/man8/powernap-action.8*
 %{_mandir}/man8/powernap-now.8*
 %{_mandir}/man8/powernap.8*
 %{_mandir}/man8/powernapd.8*
-%{_mandir}/man8/powerwake-now.8*
 %dir %{_datadir}/%{name}
 %attr(755,root,root) %{_datadir}/%{name}/powernap-ethtool
 
@@ -110,6 +107,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n powerwake
 %defattr(644,root,root,755)
+%dir %{_sysconfdir}/%{name}
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/powerwaked.conf
 %attr(755,root,root) %{_bindir}/powerwake
+%attr(755,root,root) %{_sbindir}/powerwake-monitor
+%attr(755,root,root) %{_sbindir}/powerwake-now
+%attr(755,root,root) %{_sbindir}/powerwaked
 %{_mandir}/man1/powerwake.1*
+%{_mandir}/man8/powerwake-now.8*
 /etc/bash_completion.d/powerwake_completion
