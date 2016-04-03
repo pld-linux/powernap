@@ -51,11 +51,12 @@ rm powernap/.powernap.py.swp
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_mandir}/man{1,8},%{_sysconfdir}/%{name},%{py_sitescriptdir}} \
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_bindir},%{_mandir}/man{1,8},{%{_datadir},%{_sysconfdir}}/%{name},%{py_sitescriptdir}} \
 	$RPM_BUILD_ROOT/etc/{bash_completion.d,pm/power.d}
 
 install -p sbin/* $RPM_BUILD_ROOT%{_sbindir}
 install -p bin/* $RPM_BUILD_ROOT%{_bindir}
+cp -a powernap-ethtool $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -p powerwake_completion $RPM_BUILD_ROOT/etc/bash_completion.d
 cp -p action config $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 cp -a actions/pm/* $RPM_BUILD_ROOT/etc/pm/power.d
@@ -97,6 +98,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/powernap.8*
 %{_mandir}/man8/powernapd.8*
 %{_mandir}/man8/powerwake-now.8*
+%dir %{_datadir}/%{name}
+%attr(755,root,root) %{_datadir}/%{name}/powernap-ethtool
 
 %files -n python-%{name}
 %defattr(644,root,root,755)
