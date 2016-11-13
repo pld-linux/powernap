@@ -1,11 +1,12 @@
 Summary:	Powernap
 Name:		powernap
 Version:	2.20
-Release:	0.3
+Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	https://launchpad.net/powernap/trunk/%{version}/+download/%{name}_%{version}.orig.tar.gz
 # Source0-md5:	3aa5bd8f6d5f69045a0f28ad7acca732
+URL:		https://launchpad.net/powernap
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 Requires:	python-%{name} = %{version}-%{release}
